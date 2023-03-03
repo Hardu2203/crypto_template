@@ -26,10 +26,6 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Flutter BottomNavigationBar Example'),
-          // backgroundColor: Colors.blue
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -49,7 +45,6 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
           onTap: _onItemTapped,
       ),
     );

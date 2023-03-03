@@ -21,7 +21,6 @@ class LoginScreen extends StatelessWidget {
                   child: const Text(
                     'Swapi Swap',
                     style: TextStyle(
-                        color: Colors.blue,
                         fontWeight: FontWeight.w500,
                         fontSize: 30),
                   )),

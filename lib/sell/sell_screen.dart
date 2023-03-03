@@ -37,6 +37,11 @@ class _SellScreenState extends State<SellScreen> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Sell",
+            style: GoogleFonts.permanentMarker(
+                textStyle: Theme.of(context).textTheme.titleLarge)),
+      ),
         body: Consumer<SellProvider>(
           builder: (context, sellProvider, child) {
             return Stack(

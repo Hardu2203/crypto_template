@@ -1,9 +1,10 @@
 import 'package:crypto_template/buy/buy.dart';
 import 'package:crypto_template/sell/sell_screen.dart';
+import 'package:crypto_template/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigationBar extends StatefulWidget {
-  MyNavigationBar ({required Key key}) : super(key: key);
+  const MyNavigationBar ({required Key key}) : super(key: key);
 
   @override
   _MyNavigationBarState createState() => _MyNavigationBarState();
@@ -14,7 +15,7 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
   static const List<Widget> _widgetOptions = <Widget>[
     BuyScreen(),
     SellScreen(),
-    Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

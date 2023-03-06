@@ -1,93 +1,152 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import '../../go_router/bottom_nav_bar/bottom_nav_bar.dart';
+import '../../app_config.dart';
+import '../../user/user_model.dart';
 import '../auth_provider.dart';
+import 'dev_users_dropdown.dart';
 
-
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late UserModel? _loggedInUser;
+
+  List<Widget> devUserSelect(Size deviceSize) {
+    return [
+      SizedBox(
+        height: deviceSize.height * .03,
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            children: <Widget>[
-              Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'Swapi Swap',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 30),
-                  )),
-              Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(fontSize: 20),
-                  )),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: const TextField(
-                  // controller: nameController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: const TextField(
-                  obscureText: true,
-                  // controller: passwordController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot Password',
-                ),
-              ),
-              Container(
-                  height: 50,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: ElevatedButton(
-                      child: const Text('Login'),
-                      onPressed: () {
-                        Provider.of<AuthProvider>(context, listen: false).login("Hardu");
-                        GoRouter.of(context).go('/buy');
-                      })),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Does not have account?'),
-                  TextButton(
-                    child: const Text(
-                      'Sign in',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      //signup screen
-                    },
-                  )
+      DevUsersDropdown(selectUser),
+      SizedBox(
+        height: deviceSize.height * .03,
+      ),
+    ];
+  }
+
+  selectUser(UserModel selectedUser) {
+    _loggedInUser = selectedUser;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).backgroundColor,
+                  Theme.of(context).colorScheme.primaryContainer,
                 ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: const [0, 1],
               ),
-            ],
-          )),
+            ),
+          ),
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: ListView(
+                  children: <Widget>[
+                    SizedBox(
+                      height: deviceSize.height * 0.2,
+                    ),
+                    Center(
+                      child: GradientText(
+                        'Swappi Swap',
+                        style: GoogleFonts.permanentMarker(
+                            textStyle:
+                                Theme.of(context).textTheme.displayLarge),
+                        gradient: LinearGradient(colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.tertiary,
+                        ]),
+                      ),
+                    ),
+                    SizedBox(
+                      height: deviceSize.height * 0.01,
+                    ),
+                    SizedBox(
+                      child: DefaultTextStyle(
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          fontFamily: "Agne",
+                        ),
+                        child: AnimatedTextKit(
+                          animatedTexts: [
+                            TyperAnimatedText(
+                                'The best crypto exchange in the world ever!!!',
+                                speed: const Duration(milliseconds: 180),
+                                textAlign: TextAlign.center,
+                                curve: Curves.easeInOut),
+                          ],
+                          isRepeatingAnimation: false,
+                        ),
+                      ),
+                    ),
+                    if (AppConfig.of(context)?.environment == Environment.dev)
+                      ...devUserSelect(deviceSize),
+                    SizedBox(
+                      height: deviceSize.height * 0.05,
+                    ),
+                    Container(
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: ActionChip(
+                          avatar: Image.asset(
+                            'assets/images/metamask-logo-png-transparent.png',
+                            height: 24,
+                          ),
+                          label: const Text('Connect Wallet'),
+                          onPressed: () {
+                            Provider.of<AuthProvider>(context, listen: false)
+                                .login(_loggedInUser);
+                            GoRouter.of(context).go('/buy');
+                          },
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    super.key,
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text, style: style),
     );
   }
 }

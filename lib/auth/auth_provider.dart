@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../user/user_model.dart';
+import 'auth_functions/auth_functions.dart';
+
 class AuthProvider extends ChangeNotifier {
 
-  String? _loggedInUser;
-  AuthProvider();
+  UserModel? _loggedInUser;
+  AuthFunctions authFunctions;
 
-  void login([String? user]) {
-    _loggedInUser = user;
+  AuthProvider(this.authFunctions);
+
+  void login([UserModel? user]) {
+    _loggedInUser = authFunctions.login(user);
+    // _backendApi.
   }
 
   void logout() {
@@ -18,6 +24,8 @@ class AuthProvider extends ChangeNotifier {
     return _loggedInUser != null;
   }
 
-  String? get loggedInUser => _loggedInUser;
+  UserModel? get loggedInUser => _loggedInUser;
+
+
 
 }

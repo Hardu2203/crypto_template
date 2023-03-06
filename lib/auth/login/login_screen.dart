@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-import '../bottom_nav_bar/bottom_nav_bar.dart';
+import '../../go_router/bottom_nav_bar/bottom_nav_bar.dart';
+import '../auth_provider.dart';
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -64,14 +68,8 @@ class LoginScreen extends StatelessWidget {
                   child: ElevatedButton(
                       child: const Text('Login'),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyNavigationBar(
-                              key: const ValueKey("nav"),
-                            ),
-                          ),
-                        );
+                        Provider.of<AuthProvider>(context, listen: false).login("Hardu");
+                        GoRouter.of(context).go('/buy');
                       })),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

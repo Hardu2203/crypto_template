@@ -3,6 +3,7 @@ import 'package:crypto_template/sell/create_sell_order_screen.dart';
 import 'package:crypto_template/sell/sell_details_screen.dart';
 import 'package:crypto_template/sell/sell_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:provider/provider.dart';
@@ -64,12 +65,7 @@ class _SellScreenState extends State<SellScreen> {
         Center(
           child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreateSellOrderScreen(),
-                  ),
-                );
+                context.go("/sell/create");
               },
               child: const Text("Create sell order")),
         ),
@@ -153,13 +149,7 @@ class _SellScreenState extends State<SellScreen> {
               sellOrder.cryptoAmountString,
             ),
             onTap: () {
-              // context.go('/sell/$index');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SellDetailsScreen(index: index,),
-                ),
-              );
+              context.go('/sell/$index');
             },
           );
         });

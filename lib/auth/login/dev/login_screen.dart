@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../app_config.dart';
-import '../../user/user_model.dart';
-import '../auth_provider.dart';
+import '../../../app_config.dart';
+import '../../../user/user_model.dart';
+import '../../auth_provider.dart';
 import 'dev_users_dropdown.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late UserModel? _loggedInUser;
+  UserModel? _loggedInUser;
 
   List<Widget> devUserSelect(Size deviceSize) {
     return [
@@ -110,10 +110,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 24,
                           ),
                           label: const Text('Connect Wallet'),
-                          onPressed: () {
-                            Provider.of<AuthProvider>(context, listen: false)
+                          onPressed: () async {
+                            await Provider.of<AuthProvider>(context, listen: false)
                                 .login(_loggedInUser);
-                            GoRouter.of(context).go('/buy');
+                            if (context.mounted) GoRouter.of(context).go('/buy');
                           },
                         )),
                   ],

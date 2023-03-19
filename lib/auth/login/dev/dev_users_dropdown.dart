@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../user/dev_users.dart';
-import '../../user/user_model.dart';
+import '../../../user/dev_users.dart';
+import '../../../user/user_model.dart';
 
 class DevUsersDropdown extends StatefulWidget {
   DevUsersDropdown(this.selectUser, {Key? key}) : super(key: key);

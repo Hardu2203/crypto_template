@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../auth/auth_provider.dart';
+import '../auth/login/dev/login_screen.dart';
 import '../buy/buy.dart';
-import '../auth/login/login_screen.dart';
 import '../sell/create_sell_order_screen.dart';
 import '../sell/sell_details_screen.dart';
 import '../sell/sell_screen.dart';
@@ -32,17 +32,8 @@ final router = GoRouter(
           GoRoute(
             path: '/buy',
             pageBuilder: (BuildContext context, GoRouterState state) =>
-                FadeTransitionPage(key: bottonNavBar, child: const BuyScreen()),
-            routes: <RouteBase>[
-              // The details screen to display stacked on the inner Navigator.
-              // This will cover screen A but not the application shell.
-              // GoRoute(
-              //   path: 'details',
-              //   pageBuilder: (BuildContext context, GoRouterState state) =>
-              //       FadeTransitionPage(
-              //           key: buyDetails, child: const BuyDetailsScreen()),
-              // ),
-            ],
+                FadeTransitionPage(key: bottonNavBar, child: BuyScreen()),
+            routes: const <RouteBase>[],
           ),
           GoRoute(
             path: '/sell',

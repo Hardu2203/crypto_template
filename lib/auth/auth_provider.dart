@@ -10,9 +10,8 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider(this.authFunctions);
 
-  void login([UserModel? user]) {
-    _loggedInUser = authFunctions.login(user);
-    // _backendApi.
+  Future<void> login([UserModel? user]) async {
+    _loggedInUser =  await authFunctions.login(user);
   }
 
   void logout() {

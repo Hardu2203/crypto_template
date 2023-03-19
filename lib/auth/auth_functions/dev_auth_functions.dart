@@ -4,7 +4,7 @@ import 'auth_functions.dart';
 
 class DevAuthFunctions implements AuthFunctions {
   @override
-  UserModel login([UserModel? user]) {
+  Future<UserModel> login([UserModel? user]) async {
     return user!;
   }
 

@@ -1,4 +1,4 @@
-import 'SmartContract.dart';
+import 'smart_contract.dart';
 
 class MessageVerifier {
 

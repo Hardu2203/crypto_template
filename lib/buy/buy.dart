@@ -1,4 +1,4 @@
-import 'package:crypto_template/contract/MessageVerifier.dart';
+import 'package:crypto_template/contract/message_verifier.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

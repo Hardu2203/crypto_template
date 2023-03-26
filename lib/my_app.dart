@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (ctx) => AuthProvider(buildAuthFunctions(config)), lazy: true,),
+            create: (ctx) => AuthProvider(buildAuthFunctions(config))),
         ChangeNotifierProxyProvider<AuthProvider, SellProvider>(
             create: (_) => SellProvider(),
             update: (ctx, auth, previousSellProvider) =>
